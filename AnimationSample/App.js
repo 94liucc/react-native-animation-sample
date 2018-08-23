@@ -7,8 +7,10 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
+import {Platform, StyleSheet, Text, View,TouchableOpacity} from 'react-native';
+import {createStackNavigator} from 'react-navigation';
+import Animation from './app/page/Animation';
+import Follow from './app/page/folllow'
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -16,19 +18,44 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+
+ class App extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+
+    }
+  }
+  goAnimation=()=>{
+    this.props.navigation.navigate('Animation')
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10}} onPress={()=>{this.goAnimation()}}>
+          <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+            <Text style={{fontSize:20,color:'#fafafa'}}>动画示例</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
 }
-
+export default createStackNavigator({
+   Home:{
+     screen:App
+   },
+   Animation:{
+     screen:Animation
+   },
+   Follow:{
+     screen:Follow
+   }
+},
+{
+  headerMode: 'none',
+}
+)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
