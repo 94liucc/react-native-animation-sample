@@ -10,7 +10,10 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TouchableOpacity} from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 import Animation from './app/page/Animation';
-import Follow from './app/page/folllow'
+import Follow from './app/page/folllow';
+import Spring from './app/page/spring';
+import Decay from './app/page/decay';
+import Lottie from './app/page/lottie'
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -50,6 +53,15 @@ export default createStackNavigator({
    },
    Follow:{
      screen:Follow
+   },
+   Spring:{
+     screen:Spring
+   },
+   Decay:{
+     screen:Decay
+   },
+   Lottie:{
+     screen:Lottie
    }
 },
 {

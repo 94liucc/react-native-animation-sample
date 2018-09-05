@@ -9,7 +9,7 @@ export default class Headers extends Component {
   }
   render() {
     return (
-      <View style={{ width: width, justifyContent: 'center', alignItems:'flex-start', position:'absolute',top:10}}>
+      <View style={{ width: width, justifyContent: 'center', alignItems:'flex-start',marginTop:15}}>
         <TouchableOpacity onPress={()=>{this.props.onPress()}}>
         <Image
           style={{ width: 50, height: 50,marginLeft: 20, }}

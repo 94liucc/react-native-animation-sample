@@ -17,45 +17,57 @@ export default class Animation extends Component {
         this.initedata()
     }
     componentDidMount() {
-       this.startAnimate()
+        this.startAnimate()
     }
-    pop=()=>{
+    pop = () => {
         this.props.navigation.goBack()
     }
     render() {
         return (
-            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: '#fff' }}>
-                <Headers onPress={()=>{this.pop()}} />
-                <View style={{ width: 200, height: 500, justifyContent: 'center', alignItems: 'center' }}>
-                    {
-                        this.DataMap.map((value, index) =>
-                            <Animated.View style={{
-                                transform: [{
-                                    translateX: value.animate.interpolate({
-                                        inputRange: [0, 60],
-                                        outputRange: [-100, 0]
-                                    })}]
-                                
-                            }}>
-                                <TouchableOpacity style={{ width: 160, height: 50, backgroundColor: value.bg, borderRadius: 8, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}
-                                    onPress={()=>{this.itemPress(index)}}>
-                                    <Text style={{ fontSize: 20, color: '#fafafa' }}>{value.title}</Text>
-                                </TouchableOpacity>
-                            </Animated.View>
-                        )
-                    }
+            <View style={{  flex: 1, backgroundColor: '#fff' }}>
+                <Headers onPress={() => { this.pop() }} />
+                <View style={{flex:1,justifyContent: 'center', alignItems: 'center',}}>
+                    <View style={{ width: 200, height: 500, justifyContent: 'center', alignItems: 'center' }}>
+                        {
+                            this.DataMap.map((value, index) =>
+                                <Animated.View style={{
+                                    transform: [{
+                                        translateX: value.animate.interpolate({
+                                            inputRange: [0, 60],
+                                            outputRange: [-100, 0]
+                                        })
+                                    }]
+
+                                }}>
+                                    <TouchableOpacity style={{ width: 160, height: 50, backgroundColor: value.bg, borderRadius: 8, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}
+                                        onPress={() => { this.itemPress(index) }}>
+                                        <Text style={{ fontSize: 20, color: '#fafafa' }}>{value.title}</Text>
+                                    </TouchableOpacity>
+                                </Animated.View>
+                            )
+                        }
+                    </View>
                 </View>
             </View>
         )
     }
-    itemPress(index){
-       switch(index){
-           case 0:
-               this.props.navigation.navigate('Follow')
-               break;
-       }
+    itemPress(index) {
+        switch (index) {
+            case 0:
+                this.props.navigation.navigate('Follow')
+                break;
+            case 1:
+                this.props.navigation.navigate('Spring')
+                break;
+            case 2:
+                this.props.navigation.navigate('Decay')
+                break;
+            case 3:
+                this.props.navigation.navigate('Lottie')
+                 break    
+        }
     }
-    startAnimate(){
+    startAnimate() {
         Animated.timing(
             this.mainAnimate,
             {
@@ -117,17 +129,17 @@ export default class Animation extends Component {
             animate: this.mainAnimate
         })
         this.DataMap.push({
-            title: '无',
+            title: '弹性动画',
             bg: '#996699',
             animate: this.Animate1
         })
         this.DataMap.push({
-            title: '无',
+            title: '渐停动画',
             bg: '#1976D2',
             animate: this.Animate2
         })
         this.DataMap.push({
-            title: '无',
+            title: 'Lottie',
             bg: '#FBC02D',
             animate: this.Animate3
         })
