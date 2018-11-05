@@ -14,14 +14,10 @@ import Follow from './app/page/folllow';
 import Spring from './app/page/spring';
 import Decay from './app/page/decay';
 import Lottie from './app/page/lottie'
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-
+import Test from './app/page/orientation_test'
+import Orientation from 'react-native-orientation';
+import Gesture from './app/page/gesture';
+import CommonTest from './app/page/common_test'
  class App extends Component {
   constructor(props){
     super(props)
@@ -32,6 +28,18 @@ const instructions = Platform.select({
   goAnimation=()=>{
     this.props.navigation.navigate('Animation')
   }
+  componentDidMount(){
+    Orientation.addOrientationListener(this._orientationDidChange);
+  }
+  _orientationDidChange = (orientation) => {
+    console.log('profilerender======='+orientation)
+    if (orientation === 'LANDSCAPE') {
+        
+    } else {
+      // do something with portrait layout
+    }
+    
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -40,8 +48,32 @@ const instructions = Platform.select({
             <Text style={{fontSize:20,color:'#fafafa'}}>动画示例</Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginTop:20}} onPress={()=>{this.goTest()}}>
+          <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+            <Text style={{fontSize:20,color:'#fafafa'}}>屏幕旋转</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginTop:20}} onPress={()=>{this.goGesture()}}>
+          <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+            <Text style={{fontSize:20,color:'#fafafa'}}>手势处理</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginTop:20}} onPress={()=>{this.goCommonTest()}}>
+          <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+            <Text style={{fontSize:20,color:'#fafafa'}}>测试用例</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
+  }
+  goTest=()=>{
+    this.props.navigation.navigate('Test')
+  }
+  goGesture=()=>{
+    this.props.navigation.navigate('Gesture')
+  }
+  goCommonTest=()=>{
+    this.props.navigation.navigate('CommonTest')
   }
 }
 export default createStackNavigator({
@@ -62,6 +94,15 @@ export default createStackNavigator({
    },
    Lottie:{
      screen:Lottie
+   },
+   Test:{
+     screen:Test
+   },
+   Gesture:{
+     screen:Gesture
+   },
+   CommonTest:{
+     screen:CommonTest
    }
 },
 {
