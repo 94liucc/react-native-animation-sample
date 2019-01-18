@@ -17,7 +17,8 @@ import Lottie from './app/page/lottie'
 import Test from './app/page/orientation_test'
 import Orientation from 'react-native-orientation';
 import Gesture from './app/page/gesture';
-import CommonTest from './app/page/common_test'
+import CommonTest from './app/page/common_test';
+import WebCanvas from './app/page/webcanvas'
  class App extends Component {
   constructor(props){
     super(props)
@@ -60,7 +61,12 @@ import CommonTest from './app/page/common_test'
         </TouchableOpacity>
         <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginTop:20}} onPress={()=>{this.goCommonTest()}}>
           <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-            <Text style={{fontSize:20,color:'#fafafa'}}>测试用例</Text>
+            <Text style={{fontSize:20,color:'#fafafa'}}>网络测试</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginTop:20}} onPress={()=>{this.goWebCanvas()}}>
+          <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+            <Text style={{fontSize:20,color:'#fafafa'}}>WebCanvas</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -74,6 +80,9 @@ import CommonTest from './app/page/common_test'
   }
   goCommonTest=()=>{
     this.props.navigation.navigate('CommonTest')
+  }
+  goWebCanvas=()=>{
+    this.props.navigation.navigate('WebCanvas')
   }
 }
 export default createStackNavigator({
@@ -94,6 +103,9 @@ export default createStackNavigator({
    },
    Lottie:{
      screen:Lottie
+   },
+   WebCanvas:{
+     screen:WebCanvas
    },
    Test:{
      screen:Test

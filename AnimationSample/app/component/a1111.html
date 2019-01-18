@@ -1,0 +1,435 @@
+<!doctype html> 
+    <html>
+    <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+            <meta name="viewport" content="width=${deviceWidth},initial-scale=1.0,minimum-scale=1.0,maximum-scale=64,user-scalable=1">
+    </head>
+    <style>
+    #title
+    {
+      color: tomato;
+      
+    };
+    #mydiv{
+     position: absolute;
+     color: aqua;
+     width: 40px;
+     height: 40px;
+     border-radius: 20px;
+     top: 200;
+     left: 200px;
+    }
+    </style>
+    <body>
+        <h2 id="title">webCanvas测试</h2>
+        <canvas id="canvas" width="850" height="850"  style="border:1px solid #c3c3c3;"  ></canvas>
+        <button style="color: tomato;" id="button">点击回退</button>
+        <button style="color: tomato; " onclick="capture()">点击截屏</button>
+        <div id="div" style="width: 80px;height: 80px;position: absolute;background-color: aqua;border-radius: 50%;top: 200px;left: 200px;border:solid ;
+                             border-width: 5px;border-color:#e3e3e3;">
+          
+        </div>
+      
+        
+    </body>
+    <script src="https://cdn.rawgit.com/magicien/undo-canvas/v0.1.3/undo-canvas.js"></script>
+    <script src="./svg-path-to-canvas.js"></script>
+    <script src="./hammer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script>
+    <script>
+      var c=document.getElementById('canvas')
+      var button =document.getElementById('button')
+      var canvas=c.getContext('2d');
+      var circle=document.getElementById('div')
+      var creatCircle;
+      // const hammer = new Hammer(c)
+      // hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL })
+      // hammer.on('pandown panup panleft panright', panDownUp);
+      // hammer.on('panstart',panStart)
+       var px=[];//记录鼠标移动是的X坐标
+       var py=[];//记录鼠标移动是的Y坐标
+       var clickDrag=[];
+       var history_num=0;
+       var history_arr=[];
+       var points=[];
+       var points_array=[];
+       var lastX=''
+       var lastY=''
+       var d = 'M5903 4810 c-91 -18 -156 -71 -182 -149 -17 -53 -13 -189 11 -339 31 -196 31 -426 0 -537 -43 -149 -126 -271 -247 -362 -102 -77 -178 -105 -298 -111 -122 -5 -209 19 -283 79 -62 52 -80 61 -104 54 -19 -6 -19 -8 9 -48 65 -95 137 -266 167 -396 13 -56 21 -187 12 -196 -2 -2 -47 12 -100 30 -131 46 -239 65 -368 65 -80 0 -121 5 -163 19 -69 24 -292 130 -357 170 l-48 29 -60 -36 c-136 -82 -277 -221 -378 -374 -25 -37 -90 -152 -144 -255 -73 -139 -108 -219 -135 -308 -162 -534 -311 -902 -488 -1205 -30 -52 -54 -96 -52 -98 1 -2 43 -11 93 -22 49 -10 99 -23 111 -30 18 -9 26 -9 39 2 9 7 93 76 187 154 372 307 557 436 790 550 333 162 568 210 992 202 217 -5 247 -7 337 -31 192 -51 348 -148 506 -313 47 -49 112 -129 144 -179 246 -377 227 -355 309 -355 45 0 177 29 177 38 0 4 -11 61 -25 127 -71 345 -100 678 -92 1047 6 264 7 274 67 668 11 74 22 208 25 298 5 179 25 262 80 343 64 91 206 156 350 160 28 1 64 4 80 8 l30 6 -56 32 c-53 30 -109 83 -109 104 0 20 40 7 96 -31 83 -57 174 -83 272 -79 108 5 174 39 278 143 151 151 208 335 137 443 -9 14 -58 56 -109 94 -106 80 -152 128 -314 329 -64 80 -139 169 -167 199 l-50 55 -29 -21 c-77 -55 -220 -83 -421 -83 -127 0 -425 23 -462 36 -11 3 -8 11 12 32 48 50 30 61 -70 42z m349 -411 c52 -26 116 -28 185 -5 93 31 134 3 75 -52 -41 -38 -99 -54 -195 -52 -45 1 -108 -4 -139 -11 -66 -15 -84 -6 -48 23 l25 20 -56 -7 c-55 -7 -99 4 -99 25 0 5 27 17 60 26 33 9 60 21 60 25 0 5 9 18 20 29 22 22 32 20 112 -21z m1080 -261 c12 -17 23 -52 26 -77 8 -92 -59 -93 -105 -1 -28 54 -29 74 -4 99 25 25 55 17 83 -21z m-3602 -2489 c-61 -54 -180 -100 -180 -70 0 15 76 70 117 86 21 7 52 14 68 14 l30 0 -35 -30z m80 -29 c0 -17 -40 -51 -83 -69 -23 -10 -62 -35 -86 -55 -65 -54 -119 -62 -92 -13 11 20 103 88 176 129 33 19 85 24 85 8z'
+      // const d = 'M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z'
+       var sp
+       function formateColor(input){
+       var m = input.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
+        if( m) {
+            return [m[1],m[2],m[3]];
+        }
+       }
+       function panDownUp(ev){
+         console.log(ev)
+        var scrollY = ev.deltaY
+        var scrollX =ev.deltaX
+        creatCircle.style.transform=`translateX(${scrollX}px) translateY(${scrollY}px)`
+       }
+       function panStart(ev){
+        //  console.log(ev)
+       }
+      function capture(){
+      //  var canvas = document.createElement('canvas');
+      //  var context = canvas.getContext('2d');
+      //  canvas.width = 850;
+      //  canvas.height = 850;
+      //  canvas.style.background='#f00'
+      //   var image = new Image();
+      //   image.src=c.toDataURL("image/png");
+      //   image.onload=function(){
+      //     context.drawImage(image, 0, 0,canvas.width,canvas.height);
+      //   }
+      //   // var image2 = new Image();
+      //   // image2.src='../images//back.png';
+      //   // image2.onload=function(){
+      //   //   context.drawImage(image2, 0, 0,canvas.width,canvas.height);
+      //   // }
+      //   setTimeout(function(){
+        
+      //   var abimage=document.getElementById('image');
+      //   abimage.src= canvas.toDataURL("image/png")
+      //   },100)
+      //第二版。。。。
+        sp= new SvgPath(d)
+         canvas.save()
+         canvas.beginPath()
+          sp.save()
+          .beginPath()
+          .translate(0, -768)
+          // .rotate(180)
+          .scale(0.09,-0.09)
+          // .fillStyle('#f00')
+          // .rotate(45)          
+          .translate(0.5, 768.5)
+          // .translate(500, 500)
+          .strokeStyle('#0000')
+          .lineWidth(0)
+          .to(canvas)
+          .stroke()
+        canvas.clip();
+        canvas.clearRect(0, 0, c.width, c.height);
+        canvas.restore()
+        var state=c.toDataURL("image/png")
+        points_array.push(state)
+      }
+      inite=function(){
+        canvas.lineJoin = "round";//context.lineJoin - 指定两条线段的连接方式
+        // canvas.lineWidth = 50;//线条的宽度 #D4EFDF
+        canvas.lineCap="round"
+        // canvas.miterLimit=30
+        // var gradient=ctx.createLinearGradient(0,0,170,0);
+        // gradient.addColorStop("0","magenta");
+        // gradient.addColorStop("0.5","blue");
+        // gradient.addColorStop("1.0","red");
+        // canvas.strokeStyle=gradient;
+      //  var color='rgb(177,221,134)'
+      //  var parsed=formateColor(color)
+      //  console.log(parsed)
+      //   //限制绘图在某一条path里面
+        sp= new SvgPath(d)
+      //   const [cx, cy] = sp.center
+      //   var mCx=cx*0.1
+      //   var mCy=cy*0.1;
+      //   // canvas.shadowColor='rgb(123,123,255)'
+      //   // canvas.shadowBlur=30
+      //   canvas.strokeStyle="rgba(123,123,255,0.2)";
+      //   // canvas.globalAlpha = 0.2;
+      //   canvas.beginPath();
+        
+      //   canvas.lineWidth=30
+      //   canvas.moveTo(100,200)
+      //   canvas.lineTo(100, 300);
+      //   canvas.stroke()
+      //   canvas.closePath()
+      //   canvas.beginPath();
+      //  //context.lineTo(x, y) , 将当前点与指定的点用一条笔直的路径连接起来 
+      //   canvas.moveTo(100,300)
+      //   canvas.lineTo(200, 400);
+      //   canvas.closePath();//context.closePath() , 如果当前路径是打开的则关闭它 
+      //   canvas.stroke();
+      canvas.beginPath()
+      var points=[200,300,400,500,600]
+       for(var i=0;i<points.length;i++){
+        var gradient = canvas.createRadialGradient(points[i],points[i],90,points[i],points[i],30);
+        gradient.addColorStop(0,"rgba(123,123,255,0)");
+        gradient.addColorStop(1,"rgba(123,123,255,0.8)");
+        canvas.fillStyle=gradient;
+        canvas.arc(points[i],points[i],90,0,Math.PI*2,true)
+        canvas.fill()
+       }
+      //  canvas.fill()
+       canvas.closePath()
+        // 补全 Demo
+
+
+
+      //   var x1=600;
+      //   var y1=200;
+      //   var x2=300;
+      //   var y2=500;
+      //   var dx=x2-x1;
+      //   var dy=y2-y1;
+      //   var distance=Math.sqrt(dx*dx+dy*dy)
+      //   var minX=Math.min(x1,x2)
+      //   var minY=Math.min(y1,y2)
+      //    for(var i=distance/50;i>=1;i--){
+      //       var centerX=dx*50*i/distance+x1
+      //       var centerY=dy*50*i/distance+y1
+      //       // console.log(centerX+'---x'+i)
+      //       // console.log(centerY+'---y')
+      //       var gradient = canvas.createRadialGradient(centerX,centerY,50,centerX,centerY,10);
+      //       gradient.addColorStop(0,"rgba(123,123,255,0)");
+      //       gradient.addColorStop(1,"rgba(123,123,255,0.2)");
+      //       canvas.fillStyle=gradient;
+      //       canvas.fillRect(centerX-50,centerY-50,100,100)
+      //   }
+        // canvas.save();
+        // sp.save()
+        //   .beginPath()
+        //   .translate(0, -768)
+        //   // .rotate(180)
+        //   .scale(0.09,-0.09)
+        //   // .fillStyle('#f00')
+        //   // .rotate(45)          
+        //   .translate(0.5, 768.5)
+        //   // .translate(500, 500)
+        //   .strokeStyle('#0000')
+        //   .lineWidth(0)
+        //   .to(canvas)
+        //   .stroke()
+        // //   // .fill()
+        // canvas.clip();
+        
+        this.isLock=false
+        button.onclick=function(){
+          //undo 第一版
+          // var lastnum=history_arr[history_arr.length-1];
+          // if(lastnum==0){
+          //  return
+          // }
+          // for(let i=0;i<lastnum;i++){
+          //   setTimeout(()=>{
+          //     canvas.undo();  
+          //   },10)
+           
+          // }
+          // history_arr.splice(history_arr.length-1,1)
+          lastX='';
+          lastY=''
+          redrawAll()
+        }
+        c.addEventListener('mousedown',mousedown)
+        c.addEventListener('mousemove',mousemove)
+        c.addEventListener('mouseup',mouseup)
+      }
+      function redrawAll() {
+
+              if (points_array.length == 0) {
+                  return;
+              }
+          
+              canvas.clearRect(0, 0, c.width, c.height);
+              
+              //第一版
+              for (var i = 0; i < points_array.length-1; i++) {
+
+                  var pt = points_array[i];
+                  console.log(pt.length)
+                  for(var j=0;j<pt.length;j++){
+                    movePoint(pt[j].px,pt[j].py);//记录鼠标位置 
+                    drawPoint(true);//绘制路线
+                    lastX=pt[j].px;
+                    lastY=pt[j].py
+                  }
+                  // this.isLock=false;
+                  // px=[];
+                  // py=[];
+                  // clickDrag=[];
+              }
+              // 第二版
+              // if(points_array.length>1){
+              //     // canvas.putImageData(points_array[points_array.length-2],0,0)
+              //     var mimage = new Image();
+              //     mimage.src=points_array[points_array.length-2]
+              //     mimage.onload=function(){
+              //       canvas.drawImage(mimage, 0, 0,850,850)
+              //     }
+              //     console.log(points_array[points_array.length-2].length)
+              // }
+              points_array.pop();
+      }
+      mouseup=function(e){
+        this.isLock=false;
+        // console.log(this.x)
+        px=[];
+        py=[];
+        clickDrag=[];
+        history_arr.push(history_num)
+        history_num=0;
+        points_array.push(points)
+        points=[]
+        lastX='';
+        lastY=''
+        // var state=c.toDataURL("image/png")
+        // points_array.push(state)
+        // canvas.restore()
+        canvas.closePath();//context.closePath() , 如果当前路径是打开的则关闭它 
+        // document.body.removeChild(creatCircle)
+      }
+      mousedown=function(e){
+        var touch= e; 
+        var _x=touch.clientX - touch.target.offsetLeft;//鼠标在画布上的x坐标，以画布左上角为起点 
+        var _y=touch.clientY - touch.target.offsetTop;//鼠标在画布上的y坐标，以画布左上角为起点 
+        canvas.lineWidth=30
+        // canvas.strokeStyle='rgba(123,123,255,0.2)';
+        movePoint(_x,_y);//记录鼠标位置 
+        drawPoint(false);//绘制路线
+        this.isLock=true
+        console.log(_x+'--'+_y)
+        lastX=_x;
+        lastY=_y
+        // circle.style.display='none'
+        // circle.style.top=_y+'px';
+        // circle.style.left=_x+'px';
+        // circle.style.display='inline'
+        // 测试吸色圆圈
+        // creatCircle=document.createElement('div')
+        // creatCircle.style.position='absolute'
+        // creatCircle.style.top=_y+'px';
+        // creatCircle.style.left=_x+'px';
+        // // creatCircle.style.backgroundColor='#ff0'
+        // creatCircle.style.backgroundImage='linear-gradient(90deg,red,blue)'
+        // creatCircle.style.width=80+'px';
+        // creatCircle.style.height=80+'px';
+        // creatCircle.style.borderRadius=40+'px';
+        // creatCircle.style.borderWidth=30+'px';
+        // creatCircle.style.borderColor='rgb(255,0,0)',
+        // document.body.appendChild(creatCircle);
+
+        // canvas.beginPath();
+        // canvas.moveTo(_x,_y)
+
+      }
+      
+      mousemove=function(e){
+        var touch= e; 
+        var _x=touch.clientX - touch.target.offsetLeft;//鼠标在画布上的x坐标，以画布左上角为起点 
+        var _y=touch.clientY - touch.target.offsetTop;//鼠标在画布上的y坐标，以画布左上角为起点 
+        
+
+
+        // // circle.style.display='none'
+        // circle.style.top=_y+'px';
+        // circle.style.left=_x+'px';
+        // circle.style.display='inline'
+        // console.log('mousemove')
+        if(this.isLock){
+          // var gradient = canvas.createRadialGradient(_x,_y,30,_x,_y,10);
+                            
+          // // var gradient = canvas.createLinearGradient(lastX,lastY,_x,_y);                  
+          // gradient.addColorStop(0,"rgba(123,123,255,0)");
+          // gradient.addColorStop(1,"rgba(123,123,255,0.2)");
+          
+          // canvas.shadowColor='rgb(123,123,255)'
+          //  canvas.shadowBlur=2
+          // canvas.clearRect(0, 0, 850, 850)
+          //============================
+          // canvas.beginPath();
+          // var dx=_x-lastX;
+          // var dy=_y-lastY;
+          // var distance=Math.sqrt(dx*dx+dy*dy)
+          // if(distance>=2){
+          // canvas.moveTo(lastX,lastY)
+          // canvas.lineTo(_x,_y) 
+          
+          // canvas.stroke()
+          // lastX=_x;
+          // lastY=_y
+          // // canvas.closePath();
+          // }
+        //=================================
+        movePoint(_x,_y);//记录鼠标位置 
+        drawPoint(false);//绘制路线
+        // canvas.restore()
+        lastX=_x;
+        lastY=_y
+        
+        }
+      }
+      movePoint=function(x,y,dragging) 
+        { 
+            px.push(x); 
+            py.push(y); 
+            clickDrag.push(y); 
+        }, 
+        drawPoint=function(undo) {
+                    history_num++;
+                    for(var i=0; i < px.length; i++)//循环数组 
+                    {       
+                            canvas.beginPath();//context.beginPath() , 准备绘制一条路径 
+                            if(clickDrag[i] && i){//当是拖动而且i!=0时，从上一个点开始画线。 
+                                canvas.moveTo(px[i-1], py[i-1]);//context.moveTo(x, y) , 新开一个路径，并指定路径的起点 
+                            }else{ 
+                                canvas.moveTo(px[i]-1, py[i]); 
+                            }
+                            var dx=px[i]-lastX;
+                            var dy=py[i]-lastY;
+                            var distance=Math.sqrt(dx*dx+dy*dy)
+                            console.log(distance+'-----1')
+                            // if(distance>=50 && lastX && lastY){
+                            
+                            // var minX=Math.min(px[i],lastX)
+                            // var minY=Math.min(py[i],lastY)
+                           
+                            // console.log(minX+'-----2')
+                            // console.log(minY+'-----3')
+                            //   for(var i=1;i<=distance/30;i++){
+                            //     var centerX=dx*30*i/distance+lastX
+                            //     var centerY=dy*30*i/distance+lastY
+                            //     var gradient = canvas.createRadialGradient(centerX,centerY,50,centerX,centerY,10);
+                            //     gradient.addColorStop(0,"rgba(123,123,255,0)");
+                            //     gradient.addColorStop(1,"rgba(123,123,255,0.2)");
+                            //     canvas.fillStyle=gradient;
+                            //     canvas.fillRect(centerX-50,centerY-50,100,100)
+                            //   }
+                            // }else{
+                            var gradient = canvas.createRadialGradient(px[i],py[i],30,px[i],py[i],10);
+                            gradient.addColorStop(0,"rgba(123,123,255,0)");
+                            gradient.addColorStop(1,"rgba(123,123,255,0.2)");
+                            canvas.fillStyle=gradient;
+                            canvas.arc(px[i],py[i],30,0,Math.PI*2,true)
+                            // // fill 的形式
+                            // var gradient = canvas.createRadialGradient(px[i],py[i],50,px[i],py[i],10);
+                            // gradient.addColorStop(0,"rgba(123,123,255,0)");
+                            // gradient.addColorStop(1,"rgba(123,123,255,0.2)");
+                            // canvas.fillStyle=gradient;
+                            // canvas.fillRect(px[i]-50,py[i]-50,100,100)
+                            // }
+                            if(!undo){
+                              points.push({
+                                  px:px[i],
+                                  py:py[i],
+                              })
+                            }
+                            // var gradient = canvas.createRadialGradient(px[i],py[i],50,px[i],py[i],10);
+                            // gradient.addColorStop(0,"rgba(123,123,255,0)");
+                            // gradient.addColorStop(1,"rgba(123,123,255,0.2)");
+                            // canvas.fillStyle=gradient;
+                            // canvas.fillRect(px[i]-50,py[i]-50,100,100)
+                            // canvas.lineTo(px[i], py[i]);//context.lineTo(x, y) , 将当前点与指定的点用一条笔直的路径连接起来 
+                            // canvas.moveTo(px[i],py[i])
+                            canvas.closePath();//context.closePath() , 如果当前路径是打开的则关闭它 
+                            canvas.fill();//context.stroke() , 绘制当前路径 
+                            px=[];
+                            py=[];
+                            clickDrag=[];
+                    } 
+        }
+        inite() 
+    </script>
+    </html>
