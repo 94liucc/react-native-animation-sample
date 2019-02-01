@@ -1,5 +1,7 @@
 import Orientation from 'react-native-orientation';
 import React, { Component } from 'react';
+import Headers from '../component/header';
+import { Platform, Dimensions, Text, View, PanResponder, Animated, Easing, StyleSheet } from 'react-native';
 
 export default class Base extends Component{
 
@@ -26,5 +28,10 @@ export default class Base extends Component{
       }
       componentWillUnmount(){
         Orientation.removeOrientationListener(this._orientationDidChange);
+      }
+      renderHeader(pop){
+        return <View>
+           <Headers onPress={() => {pop()}} />
+        </View>
       }
 };

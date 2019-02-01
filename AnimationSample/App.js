@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,TouchableOpacity} from 'react-native';
+import {ScrollView, StyleSheet, Text, View,TouchableOpacity} from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 import Animation from './app/page/Animation';
 import Follow from './app/page/folllow';
@@ -18,16 +18,14 @@ import Test from './app/page/orientation_test'
 import Orientation from 'react-native-orientation';
 import Gesture from './app/page/gesture';
 import CommonTest from './app/page/common_test';
-import WebCanvas from './app/page/webcanvas'
+import WebCanvas from './app/page/webcanvas';
+import {PageConfig} from './app/config/page-config';
+import Webgl from './app/page/webgl';
+import Websockets from './app/page/websocket'
  class App extends Component {
   constructor(props){
     super(props)
-    this.state={
-
-    }
-  }
-  goAnimation=()=>{
-    this.props.navigation.navigate('Animation')
+    console.log('deviceWidth====='+deviceWidth)
   }
   componentDidMount(){
     Orientation.addOrientationListener(this._orientationDidChange);
@@ -41,48 +39,50 @@ import WebCanvas from './app/page/webcanvas'
     }
     
   }
+  _onPress(index){
+    switch(index){
+          case 0:
+          this.props.navigation.navigate('Animation')
+          break;
+          case 1:
+          this.props.navigation.navigate('Test')
+          break;
+          case 2:
+          this.props.navigation.navigate('Gesture')
+          break;
+          case 3:
+          this.props.navigation.navigate('CommonTest')
+          break;  
+          case 4:
+          this.props.navigation.navigate('WebCanvas')
+          break;
+          case 5:
+          this.props.navigation.navigate('Webgl')
+          break;
+          case 6:
+          this.props.navigation.navigate('WebSocket')
+          break;
+    }
+  }
   render() {
+    console.log('map.length')
     return (
-      <View style={styles.container}>
-        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10}} onPress={()=>{this.goAnimation()}}>
+      <ScrollView style={styles.container} contentContainerStyle={{justifyContent: 'center',alignItems: 'center',}}>
+        <View style={styles.container}>
+        {
+        PageConfig.map((value,index)=>
+          (
+            <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginVertical:20}} onPress={()=>{this._onPress(index)}}>
           <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-            <Text style={{fontSize:20,color:'#fafafa'}}>动画示例</Text>
+            <Text style={{fontSize:20,color:'#fafafa'}}>{value.title}</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginTop:20}} onPress={()=>{this.goTest()}}>
-          <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-            <Text style={{fontSize:20,color:'#fafafa'}}>屏幕旋转</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginTop:20}} onPress={()=>{this.goGesture()}}>
-          <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-            <Text style={{fontSize:20,color:'#fafafa'}}>手势处理</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginTop:20}} onPress={()=>{this.goCommonTest()}}>
-          <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-            <Text style={{fontSize:20,color:'#fafafa'}}>网络测试</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={{width:150,height:60,backgroundColor:'#9370DB',borderRadius:10,marginTop:20}} onPress={()=>{this.goWebCanvas()}}>
-          <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-            <Text style={{fontSize:20,color:'#fafafa'}}>WebCanvas</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+          )
+        )
+      }
+        </View>
+      </ScrollView>
     );
-  }
-  goTest=()=>{
-    this.props.navigation.navigate('Test')
-  }
-  goGesture=()=>{
-    this.props.navigation.navigate('Gesture')
-  }
-  goCommonTest=()=>{
-    this.props.navigation.navigate('CommonTest')
-  }
-  goWebCanvas=()=>{
-    this.props.navigation.navigate('WebCanvas')
   }
 }
 export default createStackNavigator({
@@ -115,6 +115,12 @@ export default createStackNavigator({
    },
    CommonTest:{
      screen:CommonTest
+   },
+   Webgl:{
+     screen:Webgl
+   },
+   WebSocket:{
+     screen:Websockets
    }
 },
 {
@@ -124,8 +130,7 @@ export default createStackNavigator({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginTop: 20,
     backgroundColor: '#F5FCFF',
   },
   welcome: {
