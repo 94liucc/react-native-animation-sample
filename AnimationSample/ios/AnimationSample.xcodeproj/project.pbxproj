@@ -45,10 +45,8 @@
 		5078866A21549446006E86E4 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5078865021549366006E86E4 /* libRCTOrientation.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		AA65C26E2FD6499DBD1BB826 /* libRNWebGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE8CF81B23346DEB2BDE7F7 /* libRNWebGL.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		C1E6B7E72F654C57874E491E /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6EB5F896A4447EB82BC4F6 /* libRNDeviceInfo-tvOS.a */; };
-		DB7BE635724643CC8B047AE5 /* libRNGL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DDF2C97DBE54384962ECC16 /* libRNGL.a */; };
 		E8A9533C559D4215A06C2B2A /* libLottieReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67373785A4484FA2BFBBD033 /* libLottieReactNative.a */; };
 /* End PBXBuildFile section */
 
@@ -291,6 +289,13 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		5053B78522A5169100FDB8E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5053B78022A5169000FDB8E8 /* RNWebGL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RNWebGL;
+		};
 		5057742F213F7A01000CCC36 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CD810BC6EFE5471ABC13C9A4 /* LottieReactNative.xcodeproj */;
@@ -360,20 +365,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = RNImagePicker;
-		};
-		50CE001621FF1E3E00C7C614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EDBE924273D34AAE8DDB0754 /* RNWebGL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
-			remoteInfo = RNWebGL;
-		};
-		50CEFFD421FEFC4900C7C614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8395936C37A04D94B75A4411 /* RNGL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
-			remoteInfo = RNGL;
 		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -453,6 +444,7 @@
 		2D02E4901E0B4A5D006451C7 /* AnimationSample-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AnimationSample-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		35DC96B7978546599191C7A2 /* Lottie.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = Lottie.xcodeproj; path = "../node_modules/lottie-ios/Lottie.xcodeproj"; sourceTree = "<group>"; };
+		5053B78022A5169000FDB8E8 /* RNWebGL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNWebGL.xcodeproj; path = "../node_modules/react-native-webgl/ios/RNWebGL.xcodeproj"; sourceTree = "<group>"; };
 		5078863B21549366006E86E4 /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTOrientation.xcodeproj; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		639DDAD4542342BDA3693B16 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
@@ -461,13 +453,11 @@
 		72CF1B3B38A14735BDC923F6 /* libLottie.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLottie.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		8395936C37A04D94B75A4411 /* RNGL.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGL.xcodeproj; path = "../node_modules/gl-react-native/ios/RNGL.xcodeproj"; sourceTree = "<group>"; };
 		856AACE8B4AC4A4B84949FDC /* Lottie.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = System/Library/Frameworks/Lottie.framework; sourceTree = SDKROOT; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B7AF4A30AC864E13860FA986 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		CD810BC6EFE5471ABC13C9A4 /* LottieReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LottieReactNative.xcodeproj; path = "../node_modules/lottie-react-native/src/ios/LottieReactNative.xcodeproj"; sourceTree = "<group>"; };
 		E0C30C5150144A47B58C10B2 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
-		EDBE924273D34AAE8DDB0754 /* RNWebGL.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNWebGL.xcodeproj; path = "../node_modules/react-native-webgl/ios/RNWebGL.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -503,8 +493,6 @@
 				1B39BE7E349E40DF8941001C /* Lottie.framework in Frameworks */,
 				0E39FECFB468437081BED710 /* libLottie.a in Frameworks */,
 				35379556F32948FDA09CCB9C /* libRNImagePicker.a in Frameworks */,
-				DB7BE635724643CC8B047AE5 /* libRNGL.a in Frameworks */,
-				AA65C26E2FD6499DBD1BB826 /* libRNWebGL.a in Frameworks */,
 				277C33534FC54CCDB93194F2 /* libRNDeviceInfo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -660,6 +648,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5053B78122A5169000FDB8E8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5053B78622A5169100FDB8E8 /* libRNWebGL.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		50577406213F7A00000CCC36 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -719,22 +715,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		50CE001321FF1E3E00C7C614 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				50CE001721FF1E3E00C7C614 /* libRNWebGL.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		50CEFFD121FEFC4900C7C614 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				50CEFFD521FEFC4900C7C614 /* libRNGL.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,6 +736,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5053B78022A5169000FDB8E8 /* RNWebGL.xcodeproj */,
 				5078863B21549366006E86E4 /* RCTOrientation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -772,8 +753,6 @@
 				CD810BC6EFE5471ABC13C9A4 /* LottieReactNative.xcodeproj */,
 				35DC96B7978546599191C7A2 /* Lottie.xcodeproj */,
 				0FEAA004E9CA4FDBB0F5E9C9 /* RNImagePicker.xcodeproj */,
-				8395936C37A04D94B75A4411 /* RNGL.xcodeproj */,
-				EDBE924273D34AAE8DDB0754 /* RNWebGL.xcodeproj */,
 				B7AF4A30AC864E13860FA986 /* RNDeviceInfo.xcodeproj */,
 			);
 			name = Libraries;
@@ -929,6 +908,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1001,16 +981,12 @@
 					ProjectRef = B7AF4A30AC864E13860FA986 /* RNDeviceInfo.xcodeproj */;
 				},
 				{
-					ProductGroup = 50CEFFD121FEFC4900C7C614 /* Products */;
-					ProjectRef = 8395936C37A04D94B75A4411 /* RNGL.xcodeproj */;
-				},
-				{
 					ProductGroup = 5081E33121EDB6B900BBEE55 /* Products */;
 					ProjectRef = 0FEAA004E9CA4FDBB0F5E9C9 /* RNImagePicker.xcodeproj */;
 				},
 				{
-					ProductGroup = 50CE001321FF1E3E00C7C614 /* Products */;
-					ProjectRef = EDBE924273D34AAE8DDB0754 /* RNWebGL.xcodeproj */;
+					ProductGroup = 5053B78122A5169000FDB8E8 /* Products */;
+					ProjectRef = 5053B78022A5169000FDB8E8 /* RNWebGL.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1248,6 +1224,13 @@
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		5053B78622A5169100FDB8E8 /* libRNWebGL.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNWebGL.a;
+			remoteRef = 5053B78522A5169100FDB8E8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		50577430213F7A01000CCC36 /* libLottieReactNative.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1309,20 +1292,6 @@
 			fileType = archive.ar;
 			path = libRNImagePicker.a;
 			remoteRef = 5081E33421EDB6B900BBEE55 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		50CE001721FF1E3E00C7C614 /* libRNWebGL.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNWebGL.a;
-			remoteRef = 50CE001621FF1E3E00C7C614 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		50CEFFD521FEFC4900C7C614 /* libRNGL.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNGL.a;
-			remoteRef = 50CEFFD421FEFC4900C7C614 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {

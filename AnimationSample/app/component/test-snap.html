@@ -21,7 +21,7 @@
      </head>
      <body>
          <div id="div">
-                <button onclick="onClick()">点击取消动画</button>
+                <!-- <button onclick="onClick()">点击取消动画</button> -->
                 <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 20010904//EN'  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
                 <svg id="svg" height="850.000000pt"  preserveAspectRatio="xMidYMid meet" version="1.0" viewBox="0 0 850.000000 850.000000" width="850.000000pt" xmlns="http://www.w3.org/2000/svg">
                 <metadata>
@@ -191,27 +191,35 @@
                          fill:'#fff',
                         //  transform:myMatrix,
                          fillOpacity: 0,
-                         class:'clip'
+                         id:'clip',
+                      //    width:bBox.width+'pt',
+                      // height:bBox.height+'pt'
                      })
                     path.attr({
                       'clip-path':path1
                     })
-                    var el= document.getElementsByClassName('clip')
+                    var el= document.getElementById('clip')
         
-                    
-                    el[0].style.transformOrigin='center';
+                    var clipPath= path1.parent()
+                    var parentId=clipPath.id
+                    clipPath.attr({
+                      // 'clipPathUnits':"objectBoundingBox"
+                      // width:bBox.width,
+                      // height:bBox.height
+                    })
+                    el.style.transformOrigin='center';
                     anime({
-                      targets:'.clip',
+                      targets:'#'+parentId,
                       translateX:mx,
                       translateY:my,
                       duration:0
                     })
                     animation= anime({
-                      targets:'.clip',
+                      targets:'#clip',
                       scale:(Math.max(bBox.width/bBox2.width,bBox.height/bBox2.height)+0.5)*2 ,
-                      duration:5000,
+                      duration:10000,
                       easing: 'linear',
-                      rotate:'0.2turn',
+                      // rotate:'0.2turn',
                       begin:function(anim){
                         click_animation=true
                       },

@@ -158,11 +158,16 @@
         var gradient = canvas.createRadialGradient(points[i],points[i],90,points[i],points[i],30);
         gradient.addColorStop(0,"rgba(123,123,255,0)");
         gradient.addColorStop(1,"rgba(123,123,255,0.8)");
-        canvas.fillStyle=gradient;
-        canvas.arc(points[i],points[i],90,0,Math.PI*2,true)
-        canvas.fill()
+        canvas.shadowColor = 'rgb('+255+','+0+','+0+')';
+        canvas.shadowBlur = 180;
+        canvas.shadowOffsetX=180;
+        // canvas.shadowOffsetY=180
+        canvas.fillStyle='#f00';
+        canvas.arc(points[i],points[i],40,0,Math.PI*2,true)
+        // canvas.rect(points[i],points[i],100,100)
+        
        }
-      //  canvas.fill()
+       canvas.fill()
        canvas.closePath()
         // 补全 Demo
 
